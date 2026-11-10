@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Christmas Exploration Journal</title>
+<style>
+  /* ==========================================================
+     KOKON COACHING – CHRISTMAS BODY PEACE JOURNAL
+     Colours live here. Change a value and it updates everywhere.
+     ========================================================== */
+  :root {
+    --green:  #2D401B;   /* dark green  – text, buttons          */
+    --gold:   #CDAC79;   /* warm gold   – fine lines, progress   */
+    --pink:   #CFB0A6;   /* dusty pink  – soft highlights        */
+    --neutral:#D9D4CE;   /* warm neutral – borders, tracks       */
+
+    --paper:  #FAF8F5;   /* page background (a light tint of the neutral).
+                            Set to #FFFFFF if your Squarespace page is white. */
+    --gold-text: #86693A;/* a deeper gold, used only for small text so it stays readable */
+    --soft:   #566048;   /* softer green for secondary text      */
+
+    --black:  #111111;   /* button background (matches the black in your logo) */
+
+    /* FONTS: your website fonts come first. If the visitor's browser can't
+       load them, it quietly falls back to the next font in the list. */
+    --serif: "Minerva Modern", "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    --sans:  "Freight Text Pro", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--green);
+    font-family: var(--sans);
+    font-size: 1.0625rem;
+    line-height: 1.7;
+  }
+  ::selection { background: var(--pink); color: var(--green); }
+
+  #app {
+    max-width: 41rem;
+    margin: 0 auto;
+    padding: clamp(2rem, 7vw, 4.5rem) clamp(1.4rem, 6vw, 2.5rem) 3rem;
+  }
+
+  .view { animation: fade .6s ease both; }
+  @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .view { animation: none; } * { scroll-behavior: auto !important; } }
+
+  h1 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(2rem, 6.5vw, 2.9rem);
+    line-height: 1.18;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+  h1:focus { outline: none; }
+
+  .eyebrow {
+    font-size: .74rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--gold-text);
+    margin: 0 0 1.1rem;
+  }
+  .rule { width: 3rem; height: 1px; background: var(--gold); margin: 1.6rem 0; }
+
+  /* ---------- Welcome ---------- */
+  .welcome { min-height: 60vh; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; }
+  .lede { font-family: var(--serif); font-size: 1.3rem; line-height: 1.65; max-width: 32rem; margin: 0 0 2.4rem; color: var(--soft); }
+
+  /* ---------- Buttons ---------- */
+  .btn {
+    font-family: var(--sans);
+    font-size: .78rem;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    background: var(--black);
+    color: var(--gold);
+    border: 1px solid var(--black);
+    padding: 1rem 2.1rem;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background .25s ease, color .25s ease;
+  }
+  .btn:hover { background: #2a2a2a; color: #e0c596; }
+  .link {
+    font: inherit;
+    background: none; border: 0; padding: 0;
+    color: var(--green);
+    text-decoration: underline;
+    text-decoration-color: var(--gold);
+    text-underline-offset: .25em;
+    cursor: pointer;
+  }
+  .link:hover { text-decoration-color: var(--green); }
+  .btn:focus-visible, .link:focus-visible, summary:focus-visible, .audio-btn:focus-visible {
+    outline: 2px solid var(--green); outline-offset: 3px;
+  }
+
+  /* ---------- Audio ---------- */
+  .audio {
+    display: flex; align-items: center; gap: 1.2rem;
+    margin: 2.2rem 0 2.8rem;
+    padding: 1.1rem 0;
+    border-top: 1px solid var(--neutral);
+    border-bottom: 1px solid var(--neutral);
+  }
+  .audio-btn {
+    flex: none; width: 3.1rem; height: 3.1rem; border-radius: 50%;
+    border: 1px solid var(--green); background: transparent; color: var(--green);
+    display: grid; place-items: center; cursor: pointer;
+    transition: background .25s ease, color .25s ease;
+  }
+  .audio-btn:hover:not(:disabled) { background: var(--green); color: var(--paper); }
+  .audio-btn:disabled { border-color: var(--neutral); color: var(--neutral); cursor: default; }
+  .audio-body { flex: 1; min-width: 0; }
+  .audio-label { margin: 0 0 .35rem; font-size: .92rem; color: var(--soft); }
+  .audio-time { margin: .3rem 0 0; font-size: .78rem; color: var(--soft); font-variant-numeric: tabular-nums; }
+  .audio-range {
+    --pct: 0%;
+    -webkit-appearance: none; appearance: none;
+    width: 100%; height: 18px; margin: 0; background: transparent; cursor: pointer;
+  }
+  .audio-range:disabled { cursor: default; }
+  .audio-range::-webkit-slider-runnable-track {
+    height: 3px; border-radius: 2px;
+    background: linear-gradient(to right, var(--gold) var(--pct), var(--neutral) var(--pct));
+  }
+  .audio-range::-moz-range-track { height: 3px; border-radius: 2px; background: var(--neutral); }
+  .audio-range::-moz-range-progress { height: 3px; border-radius: 2px; background: var(--gold); }
+  .audio-range::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 13px; height: 13px; border-radius: 50%;
+    background: var(--green); border: 0; margin-top: -5px;
+  }
+  .audio-range::-moz-range-thumb { width: 13px; height: 13px; border-radius: 50%; background: var(--green); border: 0; }
+  .audio-range:disabled::-webkit-slider-thumb { background: var(--neutral); }
+  .audio-range:disabled::-moz-range-thumb { background: var(--neutral); }
+
+  /* ---------- Writing ---------- */
+  .prompt { margin: 0 0 2.6rem; }
+  .prompt label {
+    display: block;
+    font-family: var(--serif);
+    font-size: 1.4rem; line-height: 1.4;
+    margin-bottom: .9rem;
+  }
+  .optional {
+    font-family: var(--sans); font-size: .72rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--gold-text); margin-left: .6rem; white-space: nowrap;
+  }
+  textarea {
+    display: block; width: 100%;
+    min-height: 13rem;
+    font-family: var(--sans); font-size: 1.05rem; line-height: 1.75; color: var(--green);
+    background: rgba(255,255,255,.65);
+    border: 1px solid var(--neutral); border-radius: 3px;
+    padding: 1.1rem 1.25rem;
+    resize: vertical; overflow: hidden;
+    transition: border-color .2s ease, box-shadow .2s ease;
+  }
+  textarea.short { min-height: 8rem; }
+  textarea::placeholder { color: #8d9585; }
+  textarea:focus { outline: none; border-color: var(--green); box-shadow: 0 0 0 4px rgba(207,176,166,.45); }
+
+  .save-status { min-height: 1.4rem; margin: -1.4rem 0 1.6rem; font-size: .82rem; color: var(--soft); text-align: right; opacity: 0; transition: opacity .5s ease; }
+  .save-status.on { opacity: 1; }
+
+  /* ---------- Chapter navigation ---------- */
+  .nav { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 1rem; }
+  .nav-msg { margin: 1.6rem 0 0; padding-left: 1rem; border-left: 2px solid var(--pink); color: var(--soft); }
+
+  /* ---------- Footer ---------- */
+  footer { margin-top: 4.5rem; padding-top: 1.6rem; border-top: 1px solid var(--neutral); font-size: .85rem; color: var(--soft); line-height: 1.6; }
+  footer p { margin: 0 0 .7rem; }
+  footer details { margin: 0 0 .9rem; }
+  footer summary { cursor: pointer; width: fit-content; text-decoration: underline; text-decoration-color: var(--gold); text-underline-offset: .25em; }
+  footer details p { margin-top: .6rem; }
+  .tools .sep { margin: 0 .5rem; color: var(--gold); }
+  .tool-msg { margin-top: .9rem; }
+  .tool-msg textarea { font-size: .9rem; min-height: 10rem; margin-top: .7rem; overflow: auto; }
+  .tool-msg .link { margin-right: 1rem; }
+
+  .notice { margin: 0 0 2rem; padding: .9rem 1.1rem; background: rgba(207,176,166,.3); border-radius: 3px; font-size: .92rem; }
+</style>
+</head>
+<body>
+<main id="app"></main>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ============================================================
+     1. THE JOURNAL'S CONTENT
+     ------------------------------------------------------------
+     Everything the journal shows lives in this one block.
+
+     TO ADD A CHAPTER LATER:
+       • Find the chapter below (chapters 2–4 are already listed).
+       • Change  ready: false  to  ready: true
+       • Fill in its  prompts  list (copy the pattern from Chapter 1).
+       • Add its audio file path in  audio  (see below).
+
+     TO ADD AN AUDIO RECORDING:
+       • Put your MP3 in a folder called "audio" next to this file.
+       • Set  audio: "audio/chapter-1.mp3"  for that chapter.
+       • Leave  audio: ""  and a quiet placeholder is shown instead.
+     ============================================================ */
+  var JOURNAL = {
+    title: "My Christmas Exploration Journal",
+    pdfTitle: "My Christmas Exploration Journal",   /* the title printed on the downloaded PDF */
+    intro: "A little space to explore what\u2019s coming up for you this Christmas, understand what\u2019s underneath your worries and find ways to support yourself.",
+    storageKey: "kokon-body-peace-journal-v1",
+    downloadName: "my-christmas-exploration-journal.pdf",
+
+    chapters: [
+      {
+        id: "ch1", number: 1, ready: true,
+        title: "What am I worried about?",
+        audio: "",
+        prompts: [
+          {
+            id: "ch1-worry",
+            text: "What is it that you\u2019re anticipating or worried about?",
+            placeholder: "Take your time. Write whatever comes up.",
+            optional: false
+          },
+          {
+            id: "ch1-most",
+            text: "Which of these feels the biggest right now?",
+            placeholder: "",
+            optional: true,
+            short: true
+          }
+        ]
+      },
+      { id: "ch2", number: 2, ready: false, title: "What\u2019s underneath that fear?", audio: "", prompts: [] },
+      { id: "ch3", number: 3, ready: false, title: "How can I support myself?",       audio: "", prompts: [] },
+      { id: "ch4", number: 4, ready: false, title: "I am more than a body.",          audio: "", prompts: [] }
+    ],
+
+    /* The final page. Later it can read earlier answers with Store.get("ch1-worry") etc. */
+    plan: { id: "plan", ready: false, title: "My Christmas Body Peace Plan" }
+  };
+
+  /* ============================================================
+     2. SAVING (browser localStorage, with safety nets)
+     ------------------------------------------------------------
+     Inside a Squarespace iframe some browsers block storage.
+     Everything below is wrapped so that if saving is blocked the
+     journal still works, and tells the person kindly.
+     ============================================================ */
+  var Store = {
+    available: false,
+    data: { answers: {}, last: null, updated: null },
+
+    init: function () {
+      var ok = false;
+      try {
+        var t = "__kokon_test__";
+        window.localStorage.setItem(t, "1");
+        ok = window.localStorage.getItem(t) === "1";
+        window.localStorage.removeItem(t);
+      } catch (e) { ok = false; }
+      this.available = ok;
+      if (ok) {
+        try {
+          var raw = window.localStorage.getItem(JOURNAL.storageKey);
+          if (raw) {
+            var p = JSON.parse(raw);
+            if (p && typeof p === "object" && p.answers) { this.data = p; }
+          }
+        } catch (e) { /* ignore unreadable data */ }
+      }
+    },
+    persist: function () {
+      if (!this.available) { return false; }
+      try { window.localStorage.setItem(JOURNAL.storageKey, JSON.stringify(this.data)); return true; }
+      catch (e) { this.available = false; return false; }
+    },
+    get: function (id) { return this.data.answers[id] || ""; },
+    set: function (id, value) {
+      this.data.answers[id] = value;
+      this.data.updated = new Date().toISOString();
+      return this.persist();
+    },
+    setLast: function (id) { this.data.last = id; this.persist(); },
+    hasAnswers: function () {
+      var a = this.data.answers;
+      return Object.keys(a).some(function (k) { return String(a[k]).trim() !== ""; });
+    },
+    clear: function () {
+      this.data = { answers: {}, last: null, updated: null };
+      if (this.available) { try { window.localStorage.removeItem(JOURNAL.storageKey); } catch (e) {} }
+    }
+  };
+
+  /* ============================================================
+     3. SMALL HELPERS
+     ============================================================ */
+  var app = document.getElementById("app");
+  var currentAudio = null;
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+  function findChapter(id) {
+    for (var i = 0; i < JOURNAL.chapters.length; i++) { if (JOURNAL.chapters[i].id === id) { return JOURNAL.chapters[i]; } }
+    return null;
+  }
+  function firstReady() {
+    for (var i = 0; i < JOURNAL.chapters.length; i++) { if (JOURNAL.chapters[i].ready) { return JOURNAL.chapters[i]; } }
+    return null;
+  }
+  function autosize(el) {
+    el.style.height = "auto";
+    el.style.height = Math.max(el.scrollHeight + 2, el.classList.contains("short") ? 128 : 208) + "px";
+  }
+  function stopAudio() {
+    if (currentAudio) { try { currentAudio.pause(); currentAudio.removeAttribute("src"); currentAudio.load(); } catch (e) {} currentAudio = null; }
+  }
+
+  /* ============================================================
+     4. AUDIO PLAYER
+     ============================================================ */
+  var ICON_PLAY  = '<svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>';
+  var ICON_PAUSE = '<svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><rect x="6.5" y="5" width="3.8" height="14" fill="currentColor"/><rect x="13.7" y="5" width="3.8" height="14" fill="currentColor"/></svg>';
+
+  function audioPlayer(src) {
+    var wrap = document.createElement("div");
+    wrap.className = "audio";
+    wrap.innerHTML =
+      '<button class="audio-btn" type="button" aria-label="Play recording"' + (src ? "" : " disabled") + ">" + ICON_PLAY + "</button>" +
+      '<div class="audio-body">' +
+        '<p class="audio-label">' + (src ? "Listen first" : "Your audio introduction will appear here") + "</p>" +
+        '<input class="audio-range" type="range" min="0" max="1000" value="0" aria-label="Recording progress"' + (src ? "" : " disabled") + ">" +
+        '<p class="audio-time"><span class="t-cur">0:00</span> / <span class="t-dur">\u2013:\u2013\u2013</span></p>' +
+      "</div>";
+    if (!src) { return wrap; }
+
+    var audio = new Audio();
+    audio.preload = "metadata";
+    audio.src = src;
+    currentAudio = audio;
+
+    var btn = wrap.querySelector(".audio-btn");
+    var range = wrap.querySelector(".audio-range");
+    var cur = wrap.querySelector(".t-cur");
+    var dur = wrap.querySelector(".t-dur");
+    var label = wrap.querySelector(".audio-label");
+
+    function fmt(s) {
+      if (!isFinite(s)) { return "\u2013:\u2013\u2013"; }
+      s = Math.floor(s);
+      return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
+    }
+    function sync() {
+      var p = audio.duration ? (audio.currentTime / audio.duration) * 100 : 0;
+      range.value = p * 10;
+      range.style.setProperty("--pct", p + "%");
+      cur.textContent = fmt(audio.currentTime);
+    }
+    audio.addEventListener("loadedmetadata", function () { dur.textContent = fmt(audio.duration); });
+    audio.addEventListener("timeupdate", sync);
+    audio.addEventListener("play",  function () { btn.innerHTML = ICON_PAUSE; btn.setAttribute("aria-label", "Pause recording"); });
+    audio.addEventListener("pause", function () { btn.innerHTML = ICON_PLAY;  btn.setAttribute("aria-label", "Play recording"); });
+    audio.addEventListener("ended", function () { audio.currentTime = 0; sync(); });
+    audio.addEventListener("error", function () {
+      label.textContent = "This recording couldn\u2019t be loaded just now.";
+      btn.disabled = true; range.disabled = true;
+    });
+    btn.addEventListener("click", function () {
+      if (audio.paused) { var pr = audio.play(); if (pr && pr.catch) { pr.catch(function () {}); } } else { audio.pause(); }
+    });
+    range.addEventListener("input", function () {
+      if (audio.duration) { audio.currentTime = (range.value / 1000) * audio.duration; sync(); }
+    });
+    return wrap;
+  }
+
+  /* ============================================================
+     5. THE PAGES
+     ============================================================ */
+  function storageNotice() {
+    if (Store.available) { return ""; }
+    return '<p class="notice">Your browser isn\u2019t letting this page save your writing, so it won\u2019t be here if you close or refresh the page. ' +
+           'You can still write \u2013 please use \u201cDownload my reflections\u201d below before you leave.</p>';
+  }
+
+  function welcomeView() {
+    var returning = Store.hasAnswers() && Store.data.last && findChapter(Store.data.last);
+    var el = document.createElement("section");
+    el.className = "view welcome";
+    el.innerHTML =
+      storageNotice() +
+      '<p class="eyebrow">Kokon Coaching</p>' +
+      '<h1 tabindex="-1">' + esc(JOURNAL.title) + "</h1>" +
+      '<div class="rule"></div>' +
+      '<p class="lede">' + esc(JOURNAL.intro) + "</p>" +
+      '<button class="btn" type="button" data-act="start">' + (returning ? "Continue where you left off" : "Start the journal") + "</button>";
+    return el;
+  }
+
+  function chapterView(ch) {
+    var idx = JOURNAL.chapters.indexOf(ch);
+    var el = document.createElement("section");
+    el.className = "view";
+
+    var promptsHtml = ch.prompts.map(function (p) {
+      return '<div class="prompt">' +
+        '<label for="' + p.id + '">' + esc(p.text) + (p.optional ? '<span class="optional">Optional</span>' : "") + "</label>" +
+        '<textarea id="' + p.id + '" data-id="' + p.id + '" class="' + (p.short ? "short" : "") + '" placeholder="' + esc(p.placeholder || "") + '"></textarea>' +
+        "</div>";
+    }).join("");
+
+    el.innerHTML =
+      storageNotice() +
+      '<p class="eyebrow">Chapter ' + ch.number + "</p>" +
+      '<h1 tabindex="-1">' + esc(ch.title) + "</h1>" +
+      '<div class="audio-slot"></div>' +
+      promptsHtml +
+      '<p class="save-status" aria-live="polite"></p>' +
+      '<div class="nav">' +
+        '<button class="link" type="button" data-act="back">\u2190 Back</button>' +
+        '<button class="btn" type="button" data-act="next">Continue</button>' +
+      "</div>" +
+      '<p class="nav-msg" aria-live="polite" hidden></p>';
+
+    el.querySelector(".audio-slot").replaceWith(audioPlayer(ch.audio));
+    el.dataset.chapter = ch.id;
+    el.dataset.index = idx;
+    return el;
+  }
+
+  function planView() {
+    var el = document.createElement("section");
+    el.className = "view";
+    el.innerHTML =
+      '<p class="eyebrow">Your summary</p>' +
+      '<h1 tabindex="-1">' + esc(JOURNAL.plan.title) + "</h1>" +
+      '<div class="rule"></div>' +
+      '<p class="lede">This page will be added once all four chapters are ready.</p>' +
+      '<button class="link" type="button" data-act="home">\u2190 Back to the start</button>';
+    return el;
+  }
+
+  function footer() {
+    var f = document.createElement("footer");
+    f.innerHTML =
+      "<p>Your writing is saved only in this browser, on this device. It isn\u2019t sent to Kokon Coaching or to anyone else.</p>" +
+      "<details><summary>More about saving</summary>" +
+        "<p>If you use a private window, a different browser or a different device, your writing won\u2019t be there when you return. " +
+        "Clearing your browser\u2019s data will also remove it. If you\u2019d like a copy to keep, use \u201cDownload my reflections\u201d.</p>" +
+      "</details>" +
+      '<p class="tools"><button class="link" type="button" data-act="download">Download my reflections</button>' +
+      '<span class="sep">\u00b7</span>' +
+      '<button class="link" type="button" data-act="clear">Clear my writing</button></p>' +
+      '<div class="tool-msg" aria-live="polite"></div>';
+    return f;
+  }
+
+  /* ============================================================
+     6. ROUTING
+     ============================================================ */
+  function currentRoute() { return window.location.hash.replace("#", "") || "welcome"; }
+
+  function go(route) {
+    if (currentRoute() === route) { render(); } else { window.location.hash = route; }
+  }
+
+  function render() {
+    stopAudio();
+    var route = currentRoute();
+    var view;
+    var ch = findChapter(route);
+
+    if (ch && ch.ready) { view = chapterView(ch); Store.setLast(ch.id); }
+    else if (route === JOURNAL.plan.id) { view = planView(); }
+    else { view = welcomeView(); }
+
+    app.innerHTML = "";
+    app.appendChild(view);
+    app.appendChild(footer());
+
+    // fill saved answers and size the writing spaces
+    var areas = app.querySelectorAll("textarea[data-id]");
+    for (var i = 0; i < areas.length; i++) {
+      areas[i].value = Store.get(areas[i].getAttribute("data-id"));
+      autosize(areas[i]);
+    }
+    window.scrollTo(0, 0);
+    var h = app.querySelector("h1");
+    if (h) { try { h.focus({ preventScroll: true }); } catch (e) {} }
+  }
+
+  /* ============================================================
+     7. DOWNLOAD / CLEAR
+     ============================================================ */
+  function buildText() {
+    var any = false;
+    var date = new Date().toLocaleDateString(undefined, { day: "numeric", month: "long", year: "numeric" });
+    var out = JOURNAL.title + "\nSaved on " + date + "\n";
+
+    JOURNAL.chapters.forEach(function (ch) {
+      if (!ch.ready) { return; }
+      out += "\n\n" + "CHAPTER " + ch.number + ": " + ch.title + "\n" + new Array(ch.title.length + 12).join("-") + "\n";
+      ch.prompts.forEach(function (p) {
+        var a = Store.get(p.id).trim();
+        if (a) { any = true; }
+        out += "\n" + p.text + "\n\n" + (a ? a : "\u2014") + "\n";
+      });
+    });
+    return any ? out : "";
+  }
+
+  function toolMsg(html) { var m = app.querySelector(".tool-msg"); if (m) { m.innerHTML = html; } }
+
+  /* ------------------------------------------------------------
+     THE DOWNLOADED PDF
+     Built entirely in the browser, with no outside tools. Each page
+     is drawn like a little printed journal page, then packed into
+     a standard A4 PDF. Colours and the title are set just below.
+     ------------------------------------------------------------ */
+  var PDF = (function () {
+    var W = 1240, H = 1754;                 // A4 at 150 dpi
+    var M = 160;                            // left and right margin
+    var TOP = 190, BOTTOM = H - 210;
+    var C = { green: "#2D401B", gold: "#CDAC79", goldText: "#86693A", pink: "#CFB0A6",
+              neutral: "#D9D4CE", soft: "#566048", mute: "#8d9585" };
+    var SERIF = '"Minerva Modern","Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif';
+    var BODY  = '"Freight Text Pro","Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif';
+
+    var pages, ctx, y, runHead;
+
+    function newPage(withHeader) {
+      var c = document.createElement("canvas");
+      c.width = W; c.height = H;
+      ctx = c.getContext("2d");
+      ctx.fillStyle = "#FFFFFF"; ctx.fillRect(0, 0, W, H);
+      ctx.textBaseline = "alphabetic";
+      pages.push({ canvas: c, cover: false });
+      y = TOP;
+      if (withHeader && runHead) { spaced(runHead, M, TOP - 50, 4, 16, C.goldText, "left"); y = TOP + 40; }
+    }
+
+    // capital letters with gentle spacing (done by hand so it works in every browser)
+    function spaced(text, x, base, sp, px, color, align) {
+      text = String(text).toUpperCase();
+      ctx.font = px + "px " + BODY; ctx.fillStyle = color; ctx.textAlign = "left";
+      var chars = Array.from(text), total = 0, i;
+      for (i = 0; i < chars.length; i++) { total += ctx.measureText(chars[i]).width + sp; }
+      total -= sp;
+      var cx = align === "right" ? x - total : x;
+      for (i = 0; i < chars.length; i++) { ctx.fillText(chars[i], cx, base); cx += ctx.measureText(chars[i]).width + sp; }
+    }
+
+    function wrap(text, font, maxW) {
+      ctx.font = font;
+      var out = [];
+      String(text).replace(/\r\n?/g, "\n").split("\n").forEach(function (par) {
+        if (!par.trim()) { out.push(""); return; }
+        var line = "";
+        par.split(/\s+/).filter(Boolean).forEach(function (w) {
+          var test = line ? line + " " + w : w;
+          if (ctx.measureText(test).width <= maxW) { line = test; return; }
+          if (line) { out.push(line); line = ""; }
+          if (ctx.measureText(w).width <= maxW) { line = w; return; }
+          var chunk = "";
+          Array.from(w).forEach(function (ch) {
+            if (ctx.measureText(chunk + ch).width > maxW) { out.push(chunk); chunk = ch; } else { chunk += ch; }
+          });
+          line = chunk;
+        });
+        out.push(line);
+      });
+      return out;
+    }
+
+    function text(str, x, font, color, lh) {
+      ctx.font = font; ctx.fillStyle = color; ctx.textAlign = "left";
+      ctx.fillText(str, x, y + Math.round(lh * 0.72));
+      y += lh;
+    }
+    function goldRule(x, yy) { ctx.fillStyle = C.gold; ctx.fillRect(x, yy, 96, 2); }
+
+    function cover(title, dateStr) {
+      newPage(false);
+      pages[pages.length - 1].cover = true;
+      spaced("Kokon Coaching", M, 560, 8, 22, C.goldText, "left");
+      y = 620;
+      wrap(title, "400 104px " + SERIF, W - 2 * M).forEach(function (l) { text(l, M, "400 104px " + SERIF, C.green, 122); });
+      goldRule(M, y + 30);
+      y += 96;
+      wrap("A little space to explore what\u2019s coming up for you this Christmas.", "italic 30px " + BODY, 720)
+        .forEach(function (l) { text(l, M, "italic 30px " + BODY, C.soft, 48); });
+      ctx.font = "24px " + BODY; ctx.fillStyle = C.soft; ctx.textAlign = "left";
+      ctx.fillText("Saved on " + dateStr, M, H - 230);
+    }
+
+    function chapter(ch) {
+      runHead = "Chapter " + ch.number + "  \u00b7  " + ch.title;
+      newPage(false);
+      y = TOP + 50;
+      spaced("Chapter " + ch.number, M, y, 6, 19, C.goldText, "left");
+      y += 40;
+      wrap(ch.title, "400 68px " + SERIF, W - 2 * M).forEach(function (l) { text(l, M, "400 68px " + SERIF, C.green, 86); });
+      goldRule(M, y + 14);
+      y += 110;
+
+      ch.prompts.forEach(function (p) {
+        var qFont = "400 37px " + SERIF, aFont = "26px " + BODY;
+        var qLines = wrap(p.text, qFont, W - 2 * M);
+        if (y + qLines.length * 52 + 30 + 3 * 46 > BOTTOM) { newPage(true); }
+        qLines.forEach(function (l) { text(l, M, qFont, C.green, 52); });
+        y += 30;
+
+        var blank = !p.answer;
+        var font = blank ? "italic 25px " + BODY : aFont;
+        var color = blank ? C.mute : C.green;
+        var lines = wrap(blank ? "Left blank for now" : p.answer, font, W - 2 * M - 44);
+        var seg = y;
+        function bar() { ctx.fillStyle = C.pink; ctx.fillRect(M, seg + 6, 4, Math.max(0, y - seg - 12)); }
+        lines.forEach(function (l) {
+          if (y + 46 > BOTTOM) { if (!blank) { bar(); } newPage(true); seg = y; }
+          if (l) { text(l, M + 44, font, color, 46); } else { y += 46; }
+        });
+        if (!blank) { bar(); }
+        y += 90;
+      });
+    }
+
+    function footers() {
+      var n = pages.length;
+      pages.forEach(function (p, i) {
+        if (p.cover) { return; }
+        ctx = p.canvas.getContext("2d");
+        ctx.fillStyle = C.neutral; ctx.fillRect(M, H - 140, W - 2 * M, 1);
+        spaced("Kokon Coaching", M, H - 92, 5, 15, C.goldText, "left");
+        ctx.font = "20px " + BODY; ctx.fillStyle = C.soft; ctx.textAlign = "right";
+        ctx.fillText((i + 1) + " / " + n, W - M, H - 92);
+      });
+    }
+
+    function toBytes(canvas) {
+      var b = atob(canvas.toDataURL("image/jpeg", 0.92).split(",")[1]);
+      var u = new Uint8Array(b.length);
+      for (var i = 0; i < b.length; i++) { u[i] = b.charCodeAt(i); }
+      return u;
+    }
+
+    function pack(jpegs, title) {
+      var enc = new TextEncoder(), parts = [], offs = [], pos = 0, n = jpegs.length;
+      function push(u) { parts.push(u); pos += u.length; }
+      function str(s) { push(enc.encode(s)); }
+      function obj(id, fn) { offs[id] = pos; str(id + " 0 obj\n"); fn(); str("endobj\n"); }
+      var PW = "595.28", PH = "841.89", total = 3 + 3 * n;
+
+      str("%PDF-1.4\n"); push(new Uint8Array([0x25, 0xE2, 0xE3, 0xCF, 0xD3, 0x0A]));
+      obj(1, function () { str("<< /Type /Catalog /Pages 2 0 R >>\n"); });
+      obj(2, function () {
+        var kids = []; for (var i = 0; i < n; i++) { kids.push((5 + 3 * i) + " 0 R"); }
+        str("<< /Type /Pages /Kids [" + kids.join(" ") + "] /Count " + n + " >>\n");
+      });
+      jpegs.forEach(function (j, i) {
+        obj(3 + 3 * i, function () {
+          str("<< /Type /XObject /Subtype /Image /Width " + W + " /Height " + H +
+              " /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length " + j.length + " >>\nstream\n");
+          push(j); str("\nendstream\n");
+        });
+        obj(4 + 3 * i, function () {
+          var s = "q " + PW + " 0 0 " + PH + " 0 0 cm /Im0 Do Q";
+          str("<< /Length " + s.length + " >>\nstream\n" + s + "\nendstream\n");
+        });
+        obj(5 + 3 * i, function () {
+          str("<< /Type /Page /Parent 2 0 R /MediaBox [0 0 " + PW + " " + PH + "] /Resources << /XObject << /Im0 " +
+              (3 + 3 * i) + " 0 R >> >> /Contents " + (4 + 3 * i) + " 0 R >>\n");
+        });
+      });
+      obj(total, function () { str("<< /Title (" + title + ") /Producer (Kokon Coaching) >>\n"); });
+
+      var xref = pos;
+      str("xref\n0 " + (total + 1) + "\n0000000000 65535 f \n");
+      for (var id = 1; id <= total; id++) { str(("0000000000" + offs[id]).slice(-10) + " 00000 n \n"); }
+      str("trailer\n<< /Size " + (total + 1) + " /Root 1 0 R /Info " + total + " 0 R >>\nstartxref\n" + xref + "\n%%EOF\n");
+      return new Blob(parts, { type: "application/pdf" });
+    }
+
+    return {
+      // data = { title, dateStr, chapters: [{ number, title, prompts: [{ text, answer }] }] }
+      make: function (data) {
+        pages = []; runHead = "";
+        cover(data.title, data.dateStr);
+        data.chapters.forEach(chapter);
+        footers();
+        var jpegs = pages.map(function (p) { var u = toBytes(p.canvas); p.canvas.width = 1; return u; });
+        return pack(jpegs, data.title.replace(/[^\x20-\x7E]/g, "").replace(/[()\\]/g, ""));
+      }
+    };
+  })();
+
+  var lastPdfUrl = null;
+
+  function download() {
+    var text = buildText();
+    if (!text) { toolMsg("There\u2019s nothing to download yet \u2013 once you\u2019ve written something, it will appear here."); return; }
+    toolMsg("Preparing your journal\u2026");
+    var fontsReady = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+    fontsReady.catch(function () {}).then(function () {
+      var data = {
+        title: JOURNAL.pdfTitle,
+        dateStr: new Date().toLocaleDateString(undefined, { day: "numeric", month: "long", year: "numeric" }),
+        chapters: JOURNAL.chapters.filter(function (c) { return c.ready; }).map(function (c) {
+          return {
+            number: c.number, title: c.title,
+            prompts: c.prompts.map(function (p) { return { text: p.text, answer: Store.get(p.id).trim() }; })
+          };
+        })
+      };
+      var blob = PDF.make(data);
+      if (lastPdfUrl) { try { URL.revokeObjectURL(lastPdfUrl); } catch (e) {} }
+      lastPdfUrl = URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      a.href = lastPdfUrl; a.download = JOURNAL.downloadName;
+      document.body.appendChild(a); a.click(); a.remove();
+      toolMsg('Your journal has been saved as a PDF. Nothing happened? ' +
+              '<button class="link" type="button" data-act="openpdf">Open it in a new tab</button>' +
+              '<button class="link" type="button" data-act="showtext">Show my writing here instead</button>');
+    }).catch(function () { showText(); });
+  }
+
+  function showText() {
+    var text = buildText();
+    toolMsg("Select all of this text, copy it and paste it into a document of your own:" +
+            '<textarea readonly id="copy-box"></textarea>');
+    var box = app.querySelector("#copy-box");
+    if (box) { box.value = text; box.addEventListener("focus", function () { box.select(); }); }
+  }
+
+  /* ============================================================
+     8. EVENTS
+     ============================================================ */
+  var statusTimer = null;
+
+  app.addEventListener("input", function (e) {
+    var t = e.target;
+    if (!t.matches || !t.matches("textarea[data-id]")) { return; }
+    autosize(t);
+    var ok = Store.set(t.getAttribute("data-id"), t.value);
+    var s = app.querySelector(".save-status");
+    if (!s) { return; }
+    clearTimeout(statusTimer);
+    statusTimer = setTimeout(function () {
+      s.textContent = ok ? "Saved on this device" : "Not saved \u2013 your browser is blocking it";
+      s.classList.add("on");
+      setTimeout(function () { s.classList.remove("on"); }, 2200);
+    }, 700);
+  });
+
+  app.addEventListener("click", function (e) {
+    var b = e.target.closest ? e.target.closest("[data-act]") : null;
+    if (!b) { return; }
+    var act = b.getAttribute("data-act");
+
+    if (act === "start") {
+      var last = Store.data.last && findChapter(Store.data.last);
+      var target = (Store.hasAnswers() && last && last.ready) ? last : firstReady();
+      go(target ? target.id : "welcome");
+    }
+    else if (act === "home") { go("welcome"); }
+    else if (act === "back") {
+      var view = app.querySelector("[data-chapter]");
+      var i = view ? parseInt(view.dataset.index, 10) : 0;
+      var prev = i > 0 ? JOURNAL.chapters[i - 1] : null;
+      go(prev && prev.ready ? prev.id : "welcome");
+    }
+    else if (act === "next") {
+      var v = app.querySelector("[data-chapter]");
+      var n = v ? parseInt(v.dataset.index, 10) : 0;
+      var nxt = JOURNAL.chapters[n + 1] || JOURNAL.plan;
+      if (nxt.ready) { go(nxt.id); return; }
+      var msg = app.querySelector(".nav-msg");
+      if (msg) {
+        msg.textContent = "The next chapter will be added soon. " +
+          (Store.available ? "Your writing is saved here, so you can come back to it whenever you like."
+                           : "Please download your reflections before you leave, as your browser isn\u2019t saving them.");
+        msg.hidden = false;
+      }
+    }
+    else if (act === "download") { download(); }
+    else if (act === "showtext") { showText(); }
+    else if (act === "openpdf") { if (lastPdfUrl) { window.open(lastPdfUrl, "_blank"); } }
+    else if (act === "clear") {
+      toolMsg("Remove everything you\u2019ve written on this device? " +
+              '<button class="link" type="button" data-act="clear-yes">Yes, clear it</button>' +
+              '<button class="link" type="button" data-act="clear-no">Keep it</button>');
+    }
+    else if (act === "clear-no") { toolMsg(""); }
+    else if (act === "clear-yes") { Store.clear(); render(); toolMsg("Your writing has been cleared from this device."); }
+  });
+
+  window.addEventListener("hashchange", render);
+  window.addEventListener("resize", function () {
+    var areas = app.querySelectorAll("textarea[data-id]");
+    for (var i = 0; i < areas.length; i++) { autosize(areas[i]); }
+  });
+
+  /* ============================================================
+     9. START
+     ============================================================ */
+  Store.init();
+  render();
+})();
+</script>
+</body>
+</html>

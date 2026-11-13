@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>My Christmas Exploration Journal</title>
+<meta name="robots" content="noindex, nofollow">
+<title>My Christmas Body Image Exploration Journal</title>
 <style>
   /* ==========================================================
      KOKON COACHING – CHRISTMAS BODY PEACE JOURNAL
@@ -141,6 +142,25 @@
   .audio-range:disabled::-webkit-slider-thumb { background: var(--neutral); }
   .audio-range:disabled::-moz-range-thumb { background: var(--neutral); }
 
+  /* ---------- "First listen, then write" cues ---------- */
+  .step { font-size: .74rem; letter-spacing: .18em; text-transform: uppercase; color: var(--gold-text); margin: 2.4rem 0 .4rem; }
+  .step.write { margin: 0 0 1.1rem; }
+  .audio { margin-top: .8rem; border-top: 0; padding-top: .4rem; }
+  .audio-btn { width: 3.5rem; height: 3.5rem; border: 2px solid var(--gold); }
+  .audio-btn:hover:not(:disabled) { background: var(--gold); color: var(--green); }
+  .audio-btn:disabled { border-color: var(--neutral); }
+  .audio-range::-webkit-slider-runnable-track { height: 4px; }
+
+  /* ---------- Chapter links (top of every chapter) ---------- */
+  .chapters { display: flex; justify-content: center; align-items: baseline; flex-wrap: wrap; gap: .2rem .1rem; font-size: .74rem; letter-spacing: .18em; text-transform: uppercase; color: var(--gold-text); margin: 2.4rem 0 0; }
+  .chapters .lbl { margin-right: .9rem; }
+  .chapters a, .chapters .ch-off { padding: .3rem .5rem; border-bottom: 1px solid transparent; }
+  .chapters a { color: var(--gold-text); text-decoration: none; }
+  .chapters a:hover, .chapters a.on { color: var(--green); border-bottom-color: var(--gold); }
+  .chapters a:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
+  .chapters .ch-off { opacity: .45; }
+  .chapters .dot { color: var(--gold); opacity: .8; }
+
   /* ---------- Writing ---------- */
   .prompt { margin: 0 0 2.6rem; }
   .prompt label {
@@ -156,7 +176,7 @@
   textarea {
     display: block; width: 100%;
     min-height: 13rem;
-    font-family: var(--sans); font-size: 1.05rem; line-height: 1.75; color: var(--green);
+    font-family: var(--sans); font-size: 1.05rem; line-height: 1.75; color: #111111;
     background: rgba(255,255,255,.65);
     border: 1px solid var(--neutral); border-radius: 3px;
     padding: 1.1rem 1.25rem;
@@ -173,6 +193,11 @@
   /* ---------- Chapter navigation ---------- */
   .nav { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 1rem; }
   .nav-msg { margin: 1.6rem 0 0; padding-left: 1rem; border-left: 2px solid var(--pink); color: var(--soft); }
+
+  /* ---------- Closing page ---------- */
+  .closing p { max-width: 34rem; margin: 0 0 1.5rem; font-size: 1.15rem; line-height: 1.85; }
+  .closing .coach-link { margin: 2.2rem 0 1.6rem; }
+  .closing .signoff { font-family: var(--serif); font-size: 1.7rem; line-height: 1.2; margin: 0 0 3.2rem; }
 
   /* ---------- Footer ---------- */
   footer { margin-top: 4.5rem; padding-top: 1.6rem; border-top: 1px solid var(--neutral); font-size: .85rem; color: var(--soft); line-height: 1.6; }
@@ -212,17 +237,17 @@
        • Leave  audio: ""  and a quiet placeholder is shown instead.
      ============================================================ */
   var JOURNAL = {
-    title: "My Christmas Exploration Journal",
-    pdfTitle: "My Christmas Exploration Journal",   /* the title printed on the downloaded PDF */
+    title: "My Christmas Body Image Exploration Journal",
+    pdfTitle: "My Christmas Body Image Exploration Journal",   /* the title printed on the downloaded PDF */
     intro: "A little space to explore what\u2019s coming up for you this Christmas, understand what\u2019s underneath your worries and find ways to support yourself.",
     storageKey: "kokon-body-peace-journal-v1",
-    downloadName: "my-christmas-exploration-journal.pdf",
+    downloadName: "my-christmas-body-image-exploration-journal.pdf",
 
     chapters: [
       {
         id: "ch1", number: 1, ready: true,
         title: "What am I worried about?",
-        audio: "",
+        audio: "https://www.kokoncoaching.co.nz/s/Chapter-1.m4a",
         prompts: [
           {
             id: "ch1-worry",
@@ -239,13 +264,144 @@
           }
         ]
       },
-      { id: "ch2", number: 2, ready: false, title: "What\u2019s underneath that fear?", audio: "", prompts: [] },
-      { id: "ch3", number: 3, ready: false, title: "How can I support myself?",       audio: "", prompts: [] },
-      { id: "ch4", number: 4, ready: false, title: "I am more than a body.",          audio: "", prompts: [] }
+      {
+        id: "ch2", number: 2, ready: true,
+        title: "What does that mean to me?",
+        audio: "https://www.kokoncoaching.co.nz/s/Chapter-2.m4a",
+        prompts: [
+          {
+            id: "ch2-says-about-me",
+            text: "If someone did judge your appearance, what might you believe that says about you?",
+            placeholder: "Take your time. Write whatever comes up.",
+            optional: false
+          },
+          {
+            id: "ch2-others-see",
+            text: "What are you afraid it might say about how others see you?",
+            placeholder: "",
+            optional: false
+          },
+          {
+            id: "ch2-worth-belonging",
+            text: "What might it mean about your worth, your acceptance or your place among the people you\u2019re with?",
+            placeholder: "",
+            optional: false
+          },
+          {
+            id: "ch2-painful",
+            text: "What feels so significant or painful about that possibility?",
+            placeholder: "",
+            optional: false
+          },
+          {
+            id: "ch2-deeper",
+            text: "Is there a deeper fear underneath this?",
+            placeholder: "",
+            optional: true,
+            short: true
+          }
+        ]
+      },
+      {
+        id: "ch3", number: 3, ready: true,
+        title: "How can I support myself?",
+        audio: "https://www.kokoncoaching.co.nz/s/Chapter-3.m4a",
+        prompts: [
+          {
+            id: "ch3-need",
+            text: "If these feelings come up, what might you need from yourself?",
+            placeholder: "Take your time. Write whatever comes up.",
+            optional: false
+          },
+          {
+            id: "ch3-comfortable",
+            text: "What would help you feel supported and comfortable?",
+            placeholder: "",
+            optional: false
+          },
+          {
+            id: "ch3-acceptance",
+            text: "What would it look like to give yourself the acceptance you\u2019re hoping to receive from others?",
+            placeholder: "",
+            optional: false
+          },
+          {
+            id: "ch3-worth",
+            text: "How could you remind yourself that your worth isn\u2019t decided by how you look or what others think?",
+            placeholder: "",
+            optional: false
+          },
+          {
+            id: "ch3-comparing",
+            text: "If you start comparing yourself to others, how could you respond to yourself with understanding instead of criticism?",
+            placeholder: "",
+            optional: false
+          }
+        ]
+      },
+      {
+        id: "ch4", number: 4, ready: true,
+        title: "I am more than a body.",
+        audio: "https://www.kokoncoaching.co.nz/s/Chapter-4.m4a",
+        prompts: [
+          {
+            id: "ch4-love",
+            text: "What do you love about yourself that has nothing to do with how you look?",
+            placeholder: "Take your time. Write whatever comes up.",
+            optional: false
+          },
+          {
+            id: "ch4-valued",
+            text: "What do the people closest to you value about you?",
+            placeholder: "",
+            optional: false
+          },
+          {
+            id: "ch4-joy",
+            text: "What brings you joy?",
+            placeholder: "",
+            optional: false,
+            short: true
+          },
+          {
+            id: "ch4-myself",
+            text: "When do you feel most like yourself?",
+            placeholder: "",
+            optional: false,
+            short: true
+          },
+          {
+            id: "ch4-made-of",
+            text: "Which qualities, experiences, relationships and interests make you who you are?",
+            placeholder: "",
+            optional: false
+          },
+          {
+            id: "ch4-remember",
+            text: "What do you want to remember about yourself when you walk into a Christmas gathering?",
+            placeholder: "",
+            optional: false
+          }
+        ]
+      }
     ],
 
     /* The final page. Later it can read earlier answers with Store.get("ch1-worry") etc. */
-    plan: { id: "plan", ready: false, title: "My Christmas Body Peace Plan" }
+    plan: { id: "plan", ready: false, title: "My Christmas Body Peace Plan" },
+
+    /* The closing page shown after Chapter 4 (reached with the Finish button). */
+    closing: {
+      id: "finish",
+      title: "Before you go…",
+      paragraphs: [
+        "I hope this journal has given you a little more insight into your relationship with your body, the thoughts and feelings that can come up around Christmas, and perhaps even a few things you hadn’t considered before.",
+        "Taking the time to explore these things is valuable. But sometimes, there’s only so far we can get on our own. Some things become clearer when we have someone alongside us to help us untangle them, look at them from a different perspective and work through what comes up.",
+        "If you ever feel you’d like to talk some of this through, I’m here."
+      ],
+      linkText: "Find out more about working together",
+      linkUrl: "https://www.kokoncoaching.co.nz/coaching",
+      signoff: "Marisa"
+    }
   };
 
   /* ============================================================
@@ -339,7 +495,7 @@
     wrap.innerHTML =
       '<button class="audio-btn" type="button" aria-label="Play recording"' + (src ? "" : " disabled") + ">" + ICON_PLAY + "</button>" +
       '<div class="audio-body">' +
-        '<p class="audio-label">' + (src ? "Listen first" : "Your audio introduction will appear here") + "</p>" +
+        '<p class="audio-label">' + (src ? "Press play to begin" : "Your audio introduction will appear here") + "</p>" +
         '<input class="audio-range" type="range" min="0" max="1000" value="0" aria-label="Recording progress"' + (src ? "" : " disabled") + ">" +
         '<p class="audio-time"><span class="t-cur">0:00</span> / <span class="t-dur">\u2013:\u2013\u2013</span></p>' +
       "</div>";
@@ -388,6 +544,17 @@
   /* ============================================================
      5. THE PAGES
      ============================================================ */
+  function chaptersNav(currentId) {
+    var items = JOURNAL.chapters.map(function (c) {
+      if (!c.ready) { return '<span class="ch-off">' + c.number + "</span>"; }
+      var on = c.id === currentId;
+      return '<a href="#' + c.id + '" data-goto="' + c.id + '" title="' + esc(c.title) + '" aria-label="Chapter ' + c.number + ": " + esc(c.title) + '"' +
+             (on ? ' class="on" aria-current="page"' : "") + ">" + c.number + "</a>";
+    });
+    return '<nav class="chapters" aria-label="Chapters"><span class="lbl">Chapters</span>' +
+           items.join('<span class="dot" aria-hidden="true">·</span>') + "</nav>";
+  }
+
   function storageNotice() {
     if (Store.available) { return ""; }
     return '<p class="notice">Your browser isn\u2019t letting this page save your writing, so it won\u2019t be here if you close or refresh the page. ' +
@@ -424,14 +591,17 @@
       storageNotice() +
       '<p class="eyebrow">Chapter ' + ch.number + "</p>" +
       '<h1 tabindex="-1">' + esc(ch.title) + "</h1>" +
+      '<p class="step">First · Listen</p>' +
       '<div class="audio-slot"></div>' +
+      '<p class="step write">Then · Write</p>' +
       promptsHtml +
       '<p class="save-status" aria-live="polite"></p>' +
       '<div class="nav">' +
         '<button class="link" type="button" data-act="back">\u2190 Back</button>' +
-        '<button class="btn" type="button" data-act="next">Continue</button>' +
+        '<button class="btn" type="button" data-act="' + (idx < JOURNAL.chapters.length - 1 ? 'next">Continue' : 'finish">Finish') + "</button>" +
       "</div>" +
-      '<p class="nav-msg" aria-live="polite" hidden></p>';
+      '<p class="nav-msg" aria-live="polite" hidden></p>' +
+      chaptersNav(ch.id);
 
     el.querySelector(".audio-slot").replaceWith(audioPlayer(ch.audio));
     el.dataset.chapter = ch.id;
@@ -451,13 +621,34 @@
     return el;
   }
 
+  function closingView() {
+    var c = JOURNAL.closing;
+    var el = document.createElement("section");
+    el.className = "view closing";
+    el.innerHTML =
+      storageNotice() +
+      '<h1 tabindex="-1">' + esc(c.title) + "</h1>" +
+      '<div class="rule"></div>' +
+      c.paragraphs.map(function (t) { return "<p>" + esc(t) + "</p>"; }).join("") +
+      '<p class="coach-link"><a class="link" href="' + esc(c.linkUrl) + '" target="_blank" rel="noopener noreferrer">' + esc(c.linkText) + " →</a></p>" +
+      '<p class="signoff">' + esc(c.signoff) + "</p>" +
+      '<div class="nav">' +
+        '<button class="link" type="button" data-act="lastchapter">← Back</button>' +
+        '<button class="btn" type="button" data-act="download">Download my reflections</button>' +
+      "</div>" +
+      chaptersNav("");
+    return el;
+  }
+
   function footer() {
     var f = document.createElement("footer");
     f.innerHTML =
       "<p>Your writing is saved only in this browser, on this device. It isn\u2019t sent to Kokon Coaching or to anyone else.</p>" +
-      "<details><summary>More about saving</summary>" +
-        "<p>If you use a private window, a different browser or a different device, your writing won\u2019t be there when you return. " +
-        "Clearing your browser\u2019s data will also remove it. If you\u2019d like a copy to keep, use \u201cDownload my reflections\u201d.</p>" +
+      "<details><summary>A little note about saving your reflections</summary>" +
+        "<p>Your journal saves your progress in your browser, so you can come back and continue where you left off.</p>" +
+        "<p>Technology can sometimes have other plans, though! If you\u2019ve written something you\u2019d like to keep, I recommend downloading your PDF before closing the journal. That way, you\u2019ll have your own copy of your reflections, just in case your browser decides not to cooperate.</p>" +
+        "<p>If you use a private window, a different browser or a different device, your writing won\u2019t be there when you return, and clearing your browser\u2019s data will also remove it.</p>" +
+        "<p>Your reflections are personal, so keep your downloaded copy somewhere safe.</p>" +
       "</details>" +
       '<p class="tools"><button class="link" type="button" data-act="download">Download my reflections</button>' +
       '<span class="sep">\u00b7</span>' +
@@ -482,6 +673,7 @@
     var ch = findChapter(route);
 
     if (ch && ch.ready) { view = chapterView(ch); Store.setLast(ch.id); }
+    else if (route === JOURNAL.closing.id) { view = closingView(); }
     else if (route === JOURNAL.plan.id) { view = planView(); }
     else { view = welcomeView(); }
 
@@ -623,7 +815,7 @@
 
         var blank = !p.answer;
         var font = blank ? "italic 25px " + BODY : aFont;
-        var color = blank ? C.mute : C.green;
+        var color = blank ? C.mute : "#111111";
         var lines = wrap(blank ? "Left blank for now" : p.answer, font, W - 2 * M - 44);
         var seg = y;
         function bar() { ctx.fillStyle = C.pink; ctx.fillRect(M, seg + 6, 4, Math.max(0, y - seg - 12)); }
@@ -764,6 +956,10 @@
   });
 
   app.addEventListener("click", function (e) {
+    // chapter links: move with the same code Back and Continue use, so it works in every embed
+    var g = e.target.closest ? e.target.closest("a[data-goto]") : null;
+    if (g) { e.preventDefault(); go(g.getAttribute("data-goto")); return; }
+
     var b = e.target.closest ? e.target.closest("[data-act]") : null;
     if (!b) { return; }
     var act = b.getAttribute("data-act");
@@ -774,6 +970,11 @@
       go(target ? target.id : "welcome");
     }
     else if (act === "home") { go("welcome"); }
+    else if (act === "finish") { go(JOURNAL.closing.id); }
+    else if (act === "lastchapter") {
+      var lc = JOURNAL.chapters.filter(function (c) { return c.ready; }).pop();
+      go(lc ? lc.id : "welcome");
+    }
     else if (act === "back") {
       var view = app.querySelector("[data-chapter]");
       var i = view ? parseInt(view.dataset.index, 10) : 0;
